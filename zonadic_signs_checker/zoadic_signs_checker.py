@@ -1,11 +1,26 @@
 month = int(input('何月：'))
 day = int(input('何日：'))
 
-while (month<1 or 12<month
-	or day<1 or 31<day):
+while month<1 or 12<month:
 	print('有効な数字を入力してください')
 	month = int(input('何月：'))
 	day = int(input('何日：'))
+match month:
+	case 1|3|5|7|8|10|12:
+		while day<1 or 31<day:
+			print('有効な数字を入力してください')
+			month = int(input('何月：'))
+			day = int(input('何日：'))
+	case 2:
+		while day<1 or 28<day:
+			print('有効な数字を入力してください')
+			month = int(input('何月：'))
+			day = int(input('何日：'))
+	case 4|6|9|11:
+		while day<1 or 30<day:
+			print('有効な数字を入力してください')
+			month = int(input('何月：'))
+			day = int(input('何日：'))
 
 match month:
 	case 1:
