@@ -10,11 +10,7 @@ commands = {
     "div": div
 }
 
-<<<<<<< Updated upstream
 cmd = input("操作を選んでください（add/sub/mul/div）：")
-=======
-cmd = input("操作を選んでください：")
->>>>>>> Stashed changes
 a = int(input("1つ目の数字："))
 b = int(input("2つ目の数字："))
 
