@@ -11,13 +11,16 @@ def show_menu():
     print("4: Exit")
 
 def add_task():
-    task = {}
-    task["title"] = input("\nEnter a task: ")
-    deadline = input("Enter its deadline (YYYY-MM-DD): ")
-    task["deadline"] = datetime.strptime(deadline,"%Y-%m-%d").date()
-    tasks.append(task)
-    print(f"\n'{task['title']}' added!")
-    print(f"The deadline is {task['deadline']}!")
+    try:
+        task = {}
+        task["title"] = input("\nEnter a task: ")
+        deadline = input("Enter the deadline (YYYY-MM-DD): ")
+        task["deadline"] = datetime.strptime(deadline,"%Y-%m-%d").date()
+        tasks.append(task)
+        print(f"\n'{task['title']}' added!")
+        print(f"The deadline is {task['deadline']}!")
+    except ValueError:
+        print("\nInvalid number.")
 
 def show_tasks():
     if not tasks:
@@ -38,7 +41,7 @@ def delete_task():
     try:
         num = int(input("\nEnter task number: "))
         removed = tasks.pop(num-1)
-        print(F"'{removed}' deleted!")
+        print(F"\n'{removed['title']}' deleted!")
     except (ValueError, IndexError):
         print("\nInvalid number.")
 
