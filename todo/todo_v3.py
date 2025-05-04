@@ -34,26 +34,51 @@ def add_task():
     except ValueError:
         print("\nInvalid number.")
 
-def prioritize():
-    tasks.sort(key=lambda x: x["priority"])
+def enumerate_tasks():
+        if not tasks: print("\nno tasks.")
+        else:
+            print("\nTasks:")
+            today = datetime.now().date()
+            for i, task in enumerate(tasks,1):
+                print(f"{i}.{task['title']}  {task['deadline']}")
+                if task["deadline"] < today:
+                    print("  Expired!")
+                else:
+                    time_left = task["deadline"] - today
+                    print(" ",time_left.days,"days left!")
+
+def sort():
+    print("\n1. Sort by date")
+    print("2. Sort by priority")
+    print("3. Cancel")
+    choice_st_s = input("Choose an option: ")
+    
+    if choice_st_s == '1':
+        tasks.sort(key=lambda x: x["deadline"])
+        show_tasks()
+    elif choice_st_s == '2':
+        tasks.sort(key=lambda x: x["priority"])
+        show_tasks()
+    elif choice_st_s == '3': show_tasks()
+    else:
+        print("\nInvalid number.")
+        show_tasks()
 
 def show_tasks():
-    prioritize()
-    if not tasks:
-        print("\nno tasks.")
+    enumerate_tasks()
+
+    print("\n1. Sort tasks")
+    print("2. Exit")
+    choice_st = input("Choose an option: ")
+
+    if choice_st == '1': sort()
+    elif choice_st == '2': print()
     else:
-        print("\nTasks:")
-        today = datetime.now().date()
-        for i, task in enumerate(tasks,1):
-            print(f"{i}.{task['title']}  {task['deadline']}")
-            if task["deadline"] < today:
-                print("  Expired!")
-            else:
-                time_left = task["deadline"] - today
-                print(" ",time_left.days,"days left!")
+        print("\nInvalid number.")
+        show_tasks()
 
 def delete_task():
-    show_tasks()
+    enumerate_tasks()
     try:
         num = int(input("\nEnter task number: "))
         removed = tasks.pop(num-1)
@@ -62,13 +87,3 @@ def delete_task():
         print("\nInvalid number.")
 
 while True:
-    show_menu()
-    choice = input("\nChoose an option: ")
-    if choice == '1': add_task()
-    elif choice == '2': show_tasks()
-    elif choice == '3': delete_task()
-    elif choice == '4':
-        print("\nBye!")
-        break
-    else:
-        print("\nInvalid choice.")
