@@ -14,24 +14,28 @@ def show_menu():
 
 def add_task():
     task = {}
+    print("999 to Cancel")
     task["title"] = input("\nEnter a task: ")
-
-    task['deadline'] = ()
-    task['deadline'] = set_deadline()
-
-    task['priority'] = 5
-    task['priority'] = prioritize()
-    match task['priority']:
-        case 1: str_a = ("Very High")
-        case 2: str_a = ("High")
-        case 3: str_a = ("Medium")
-        case 4: str_a = ("Very Low")
-        case 5: str_a = ("Low")
     
-    tasks.append(task)
-    print(f"\n'{task['title']}' added!")
-    print(f"The deadline is {task['deadline']}!")
-    print(f"The priority is '{str_a}'!")
+    if task["title"] == 999: print()
+    
+    else:
+        task['deadline'] = ()
+        task['deadline'] = set_deadline()
+
+        task['priority'] = 5
+        task['priority'] = prioritize()
+        match task['priority']:
+            case 1: str_a = ("Very High")
+            case 2: str_a = ("High")
+            case 3: str_a = ("Medium")
+            case 4: str_a = ("Very Low")
+            case 5: str_a = ("Low")
+        
+        tasks.append(task)
+        print(f"\n'{task['title']}' added!")
+        print(f"The deadline is {task['deadline']}!")
+        print(f"The priority is '{str_a}'!")
 
 def set_deadline():
     try:
@@ -99,10 +103,13 @@ def sort():
     if choice == '1':
         tasks.sort(key=lambda x: x["deadline"])
         show_tasks()
+    
     elif choice == '2':
         tasks.sort(key=lambda x: x["priority"])
         show_tasks()
+    
     elif choice == '3': show_tasks()
+    
     else:
         print("\nInvalid number.")
         show_tasks()
@@ -117,6 +124,7 @@ def edit_task(num_e):
     else:
         try:
             if num_e == 999: print()
+
             else:
                 print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
                 print("\n1. Edit title")
@@ -158,9 +166,14 @@ def delete_task():
     enumerate_tasks()
 
     try:
-        num = int(input("\nEnter task number: "))
-        removed = tasks.pop(num-1)
-        print(F"\n'{removed['title']}' deleted!")
+        print("\n999 to cancel")
+        num = int(input("Enter task number: "))
+
+        if num == 999: print()
+
+        else:
+            removed = tasks.pop(num-1)
+            print(F"\n'{removed['title']}' deleted!")
     
     except(ValueError, IndexError):
         print("\nInvalid number.")
