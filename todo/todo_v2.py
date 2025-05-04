@@ -9,16 +9,22 @@ def show_menu():
     print("4: Exit")
 
 def add_task():
-    task = {}
-    task["title"] = input("\nEnter a task: ")
-    print("\n1. Very High")
-    print("2. High")
-    print("3. Medium")
-    print("4. Low")
-    print("5. Very Low")
-    task["priority"] = int(input("Choose the priority: "))
-    tasks.append(task)
-    print(f"\n'{task['title']}' added!")
+    try:
+        task = {}
+        task["title"] = input("\nEnter a task: ")
+        print("\n1. Very High")
+        print("2. High")
+        print("3. Medium")
+        print("4. Low")
+        print("5. Very Low")
+        task["priority"] = int(input("Choose the priority: "))
+        if(task["priority"] < 1 or 5 < task["priority"]):
+            raise ValueError
+        else:
+            tasks.append(task)
+            print(f"\n'{task['title']}' added!")
+    except ValueError:
+        print("\nInvalid number.")
 
 def prioritize():
     tasks.sort(key=lambda x: x["priority"])
