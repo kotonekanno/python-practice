@@ -7,13 +7,13 @@ def show_menu():
     print("4: Exit")
 
 def add_task():
-    task = input("Enter a task: ")
+    task = input("\nEnter a task: ")
     tasks.append(task)
-    print(f"'{task}' added!")
+    print(f"\n'{task}' added!")
 
 def show_tasks():
     if not tasks:
-        print("no tasks.")
+        print("\nno tasks.")
     else:
         print("\nTasks:")
         for i, task in enumerate(tasks, 1):
@@ -22,11 +22,11 @@ def show_tasks():
 def delete_task():
     show_tasks()
     try:
-        num = int(input("Enter task number: "))
+        num = int(input("\nEnter task number: "))
         removed = tasks.pop(num-1)
-        print(F"'{removed}' deleted!")
+        print(F"\n'{removed}' deleted!")
     except (ValueError, IndexError):
-        print("Invalid number.")
+        print("\nInvalid number.")
 
 while True:
     show_menu()
@@ -35,7 +35,7 @@ while True:
     elif choice == '2': show_tasks()
     elif choice == '3': delete_task()
     elif choice == '4':
-        print("Bye!")
+        print("\nBye!")
         break
     else:
-        print("Invalid choice.")
+        print("\nInvalid choice.")
