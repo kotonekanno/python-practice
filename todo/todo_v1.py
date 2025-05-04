@@ -25,8 +25,8 @@ def show_tasks():
     else:
         print("\nTasks:")
         today = datetime.now().date()
-        for i, task in enumerate(tasks, 1):
-            print(f"{i}.{task['title']}\n  until {task['deadline']}")
+        for i, task in enumerate(tasks,1):
+            print(f"{i}.{task['title']}  {task['deadline']}")
             if task["deadline"] < today:
                 print("  Expired!")
             else:
