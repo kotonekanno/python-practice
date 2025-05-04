@@ -17,10 +17,10 @@ def add_task():
     task["title"] = input("\nEnter a task: ")
 
     task['deadline'] = ()
-    task['deadline'] = set_deadline(task['deadline'])
+    task['deadline'] = set_deadline()
 
     task['priority'] = 5
-    task['priority'] = prioritize(task['priority'])
+    task['priority'] = prioritize()
     match task['priority']:
         case 1: str_a = ("Very High")
         case 2: str_a = ("High")
@@ -33,7 +33,7 @@ def add_task():
     print(f"The deadline is {task['deadline']}!")
     print(f"The priority is '{str_a}'!")
 
-def set_deadline(num_s):
+def set_deadline():
     try:
         deadline_pre = input("Enter the deadline (YYYY-MM-DD): ")
         deadline = datetime.strptime(deadline_pre,"%Y-%m-%d").date()
@@ -41,23 +41,23 @@ def set_deadline(num_s):
     
     except ValueError:
         print("\nInvalid number.")
-        set_deadline(num_s)
+        set_deadline()
 
-def prioritize(num_p):
+def prioritize():
     try:
         print("\n1. Very High")
         print("2. High")
         print("3. Medium")
         print("4. Low")
         print("5. Very Low")
-        num_p = int(input("Choose the priority: "))
+        priority = int(input("Choose the priority: "))
         
-        if(num_p < 1 or 5 < num_p): raise ValueError
-        return num_p
+        if(priority < 1 or 5 < priority): raise ValueError
+        return priority
 
     except ValueError:
         print("\nInvalid number.")
-        prioritize(num_p)
+        prioritize()
 
 def show_tasks():
     enumerate_tasks()
@@ -110,27 +110,45 @@ def sort():
 def edit_task(num_e):
     if num_e == 0:
         enumerate_tasks()
-        num_ee = int(input("\nEnter task number: "))
-        edit_task(num_ee)
+        print("\n999. Exit")
+        num_e2 = int(input("\nEnter task number: "))
+        edit_task(num_e2)
     
     else:
         try:
-            print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
-            print("\n1. Edit title")
-            print("2. Reset deadline")
-            print("3. Change priority")
-            print("4. Exit")
-            choice = input("Choose an option: ")
+            if num_e == 999: print()
+            else:
+                print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
+                print("\n1. Edit title")
+                print("2. Reset deadline")
+                print("3. Change priority")
+                print("4. Exit")
+                choice = input("Choose an option: ")
 
-            if choice == '1':
-                tasks[num_e-1]["title"] = input("\nEnter a task: ")
-                print(F"\nUpdated to '{tasks[num_e-1]['title']}'!")
-                edit_task(0)
-            elif choice == '2': set_deadline(tasks[num_e-1]['deadline'])
-            elif choice == '3': prioritize(tasks[num_e-1]['priority'])
-            elif choice == '4': edit_task(0)
+                if choice == '1':
+                    tasks[num_e-1]["title"] = input("\nEnter a task: ")
+                    print(F"\nUpdated to '{tasks[num_e-1]['title']}'!")
+                    edit_task(num_e)
                 
-            else: raise ValueError
+                elif choice == '2':
+                    tasks[num_e-1]['deadline'] = set_deadline()
+                    print(f"\nUpdated to {tasks[num_e-1]['deadline']}!")
+                    edit_task(num_e)
+                
+                elif choice == '3':
+                    tasks[num_e-1]['priority'] = prioritize()
+                    match tasks[num_e-1]['priority']:
+                        case 1: str = ("Very High")
+                        case 2: str = ("High")
+                        case 3: str = ("Medium")
+                        case 4: str = ("Very Low")
+                        case 5: str = ("Low")
+                    print(f"Updated to '{str}'!")
+                    edit_task(num_e)
+                
+                elif choice == '4': edit_task(0)
+                    
+                else: raise ValueError
         
         except(ValueError,IndexError):
             print("\nInvalid number.")
