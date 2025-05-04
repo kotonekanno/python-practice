@@ -147,3 +147,13 @@ def delete_task():
         delete_task()
 
 while True:
+    show_menu()
+    choice = input("Choose an option: ")
+    if choice == '1': add_task()
+    elif choice == '2': show_tasks()
+    elif choice == '3': delete_task()
+    elif choice == '4':
+        print("\nBye!")
+        break
+    else:
+        print("\nInvalid choice.")
