@@ -1,4 +1,5 @@
 #締め切りと優先順位を追加できる
+#編集できる
 
 tasks = []
 from datetime import datetime
@@ -7,8 +8,9 @@ def show_menu():
     print("\n====  ToDo Menu ====")
     print("1: Add Task")
     print("2: Show Tasks")
-    print("3: Delete Task")
-    print("4: Exit")
+    print("3. Edit task")
+    print("4: Delete Task")
+    print("5: Exit")
 
 def add_task():
     try:
@@ -51,15 +53,15 @@ def sort():
     print("\n1. Sort by date")
     print("2. Sort by priority")
     print("3. Cancel")
-    choice_st_s = input("Choose an option: ")
+    choice = input("Choose an option: ")
     
-    if choice_st_s == '1':
+    if choice == '1':
         tasks.sort(key=lambda x: x["deadline"])
         show_tasks()
-    elif choice_st_s == '2':
+    elif choice == '2':
         tasks.sort(key=lambda x: x["priority"])
         show_tasks()
-    elif choice_st_s == '3': show_tasks()
+    elif choice == '3': show_tasks()
     else:
         print("\nInvalid number.")
         show_tasks()
@@ -69,13 +71,51 @@ def show_tasks():
 
     print("\n1. Sort tasks")
     print("2. Exit")
-    choice_st = input("Choose an option: ")
+    choice = input("Choose an option: ")
 
-    if choice_st == '1': sort()
-    elif choice_st == '2': print()
+    if choice == '1': sort()
+    elif choice == '2': print()
     else:
         print("\nInvalid number.")
         show_tasks()
+
+def edit_task():
+    enumerate_tasks()
+    
+    try:
+        num = int(input("\nEnter task number: "))
+        print(F"\n{tasks[num-1]['title']}  {tasks[num-1]['deadline']}")
+        print("\n1. Edit title")
+        print("2. Change deadline")
+        print("3. Change priority")
+        print("4. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            tasks[num-1]["title"] = input("\nEnter a task: ")
+            print(F"\nUpdated to '{tasks[num-1]['title']}'!")
+            edit_task()
+        elif choice == '2':
+            deadline = input("\nEnter the deadline (YYYY-MM-DD): ")
+            tasks[num-1]["deadline"] = datetime.strptime(deadline,"%Y-%m-%d").date()
+            print(F"\nThe deadline is {tasks[num-1]['deadline']}!")
+            edit_task()
+        elif choice == '3':
+            print("\n1. Very High")
+            print("2. High")
+            print("3. Medium")
+            print("4. Low")
+            print("5. Very Low")
+            tasks[num-1]["priority"] = int(input("Choose the priority: "))
+            if(tasks[num-1]["priority"] < 1 or 5 < tasks[num-1]["priority"]):
+                raise ValueError
+        elif choice == '4': edit_task()
+            
+        else: raise ValueError
+    
+    except(ValueError,IndexError):
+        print("\nInvalid number.")
+        edit_task()
 
 def delete_task():
     enumerate_tasks()
@@ -83,7 +123,19 @@ def delete_task():
         num = int(input("\nEnter task number: "))
         removed = tasks.pop(num-1)
         print(F"\n'{removed['title']}' deleted!")
-    except (ValueError, IndexError):
+    except(ValueError, IndexError):
         print("\nInvalid number.")
+        delete_task()
 
 while True:
+    show_menu()
+    choice = input("\nChoose an option: ")
+    if choice == '1': add_task()
+    elif choice == '2': show_tasks()
+    elif choice == '3': edit_task()
+    elif choice == '4': delete_task()
+    elif choice == '5':
+        print("\nBye!")
+        break
+    else:
+        print("\nInvalid choice.")
