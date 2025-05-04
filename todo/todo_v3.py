@@ -23,10 +23,10 @@ def add_task():
     task['priority'] = prioritize(task['priority'])
     match task['priority']:
         case 1: str_a = ("Very High")
-        case 1: str_a = ("High")
-        case 1: str_a = ("Medium")
-        case 1: str_a = ("Very Low")
-        case 1: str_a = ("Low")
+        case 2: str_a = ("High")
+        case 3: str_a = ("Medium")
+        case 4: str_a = ("Very Low")
+        case 5: str_a = ("Low")
     
     tasks.append(task)
     print(f"\n'{task['title']}' added!")
@@ -108,11 +108,13 @@ def sort():
         show_tasks()
 
 def edit_task(num_e):
-    if num_e == 0: enumerate_tasks()
+    if num_e == 0:
+        enumerate_tasks()
+        num_ee = int(input("\nEnter task number: "))
+        edit_task(num_ee)
     
     else:
         try:
-            num_e = int(input("\nEnter task number: "))
             print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
             print("\n1. Edit title")
             print("2. Reset deadline")
@@ -123,7 +125,7 @@ def edit_task(num_e):
             if choice == '1':
                 tasks[num_e-1]["title"] = input("\nEnter a task: ")
                 print(F"\nUpdated to '{tasks[num_e-1]['title']}'!")
-                edit_task()
+                edit_task(0)
             elif choice == '2': set_deadline(tasks[num_e-1]['deadline'])
             elif choice == '3': prioritize(tasks[num_e-1]['priority'])
             elif choice == '4': edit_task(0)
