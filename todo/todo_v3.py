@@ -17,7 +17,7 @@ def add_task():
     print("999 to Cancel")
     task["title"] = input("\nEnter a task: ")
     
-    if task["title"] == 999: print()
+    if task["title"] == "999": print()
     
     else:
         task['deadline'] = ()
@@ -45,7 +45,7 @@ def set_deadline():
     
     except ValueError:
         print("\nInvalid number.")
-        set_deadline()
+        return set_deadline()
 
 def prioritize():
     try:
@@ -61,7 +61,7 @@ def prioritize():
 
     except ValueError:
         print("\nInvalid number.")
-        prioritize()
+        return prioritize()
 
 def show_tasks():
     enumerate_tasks()
@@ -146,12 +146,12 @@ def edit_task(num_e):
                 elif choice == '3':
                     tasks[num_e-1]['priority'] = prioritize()
                     match tasks[num_e-1]['priority']:
-                        case 1: str = ("Very High")
-                        case 2: str = ("High")
-                        case 3: str = ("Medium")
-                        case 4: str = ("Very Low")
-                        case 5: str = ("Low")
-                    print(f"Updated to '{str}'!")
+                        case 1: str_p = ("Very High")
+                        case 2: str_p = ("High")
+                        case 3: str_p = ("Medium")
+                        case 4: str_p = ("Very Low")
+                        case 5: str_p = ("Low")
+                    print(f"Updated to '{str_p}'!")
                     edit_task(num_e)
                 
                 elif choice == '4': edit_task(0)
