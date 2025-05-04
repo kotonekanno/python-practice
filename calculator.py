@@ -10,7 +10,7 @@ commands = {
     "div": div
 }
 
-cmd = input("操作を選んでください：")
+cmd = input("操作を選んでください（add/sub/mul/div）：")
 a = int(input("1つ目の数字："))
 b = int(input("2つ目の数字："))
 
