@@ -14,8 +14,8 @@ def show_menu():
 
 def add_task():
     task = {}
-    print("999 to Cancel")
-    task["title"] = input("\nEnter a task: ")
+    print("\n999 to Cancel")
+    task["title"] = input("Enter a task: ")
     
     if task["title"] == "999": print()
     
@@ -39,7 +39,7 @@ def add_task():
 
 def set_deadline():
     try:
-        deadline_pre = input("Enter the deadline (YYYY-MM-DD): ")
+        deadline_pre = input("\nEnter the deadline (YYYY-MM-DD): ")
         deadline = datetime.strptime(deadline_pre,"%Y-%m-%d").date()
         return deadline
     
@@ -114,53 +114,50 @@ def sort():
         print("\nInvalid number.")
         show_tasks()
 
-def edit_task(num_e):
-    if num_e == 0:
+def edit_task():
+    while True:
         enumerate_tasks()
         print("\n999. Exit")
-        num_e2 = int(input("\nEnter task number: "))
-        edit_task(num_e2)
-    
-    else:
         try:
-            if num_e == 999: print()
-
-            else:
-                print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
-                print("\n1. Edit title")
-                print("2. Reset deadline")
-                print("3. Change priority")
-                print("4. Exit")
-                choice = input("Choose an option: ")
-
-                if choice == '1':
-                    tasks[num_e-1]["title"] = input("\nEnter a task: ")
-                    print(F"\nUpdated to '{tasks[num_e-1]['title']}'!")
-                    edit_task(num_e)
-                
-                elif choice == '2':
-                    tasks[num_e-1]['deadline'] = set_deadline()
-                    print(f"\nUpdated to {tasks[num_e-1]['deadline']}!")
-                    edit_task(num_e)
-                
-                elif choice == '3':
-                    tasks[num_e-1]['priority'] = prioritize()
-                    match tasks[num_e-1]['priority']:
-                        case 1: str_p = ("Very High")
-                        case 2: str_p = ("High")
-                        case 3: str_p = ("Medium")
-                        case 4: str_p = ("Very Low")
-                        case 5: str_p = ("Low")
-                    print(f"Updated to '{str_p}'!")
-                    edit_task(num_e)
-                
-                elif choice == '4': edit_task(0)
-                    
-                else: raise ValueError
-        
-        except(ValueError,IndexError):
+            num_e = int(input("Enter task number: "))
+            if num_e == 999:
+                print()
+                return
+            else: task = tasks[num_e-1]
+        except (ValueError,IndexError):
             print("\nInvalid number.")
-            edit_task(0)    
+            continue
+
+        while True:
+            print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
+            print("\n1. Edit title")
+            print("2. Reset deadline")
+            print("3. Change priority")
+            print("4. Exit")
+            choice = int(input("Choose an option: "))
+
+            if choice == 1:
+                task['title'] = input("\nEnter a task: ")
+                print(F"\nUpdated to '{tasks[num_e-1]['title']}'!")
+            
+            elif choice == 2:
+                task['deadline'] = set_deadline()
+                print(f"\nUpdated to {tasks[num_e-1]['deadline']}!")
+            
+            elif choice == 3:
+                task['priority'] = prioritize()
+                match task['priority']:
+                    case 1: str_p = ("Very High")
+                    case 2: str_p = ("High")
+                    case 3: str_p = ("Medium")
+                    case 4: str_p = ("Very Low")
+                    case 5: str_p = ("Low")
+                print(f"Updated to '{str_p}'!")
+            
+            elif choice == 4:
+                break
+                
+            else: print("\nInvalid choice.")
 
 def delete_task():
     enumerate_tasks()
@@ -185,7 +182,7 @@ while True:
 
     if choice == '1': add_task()
     elif choice == '2': show_tasks()
-    elif choice == '3': edit_task(0)
+    elif choice == '3': edit_task()
     elif choice == '4': delete_task()
     elif choice == '5':
         print("\nBye!")
