@@ -24,7 +24,7 @@ def add_task():
     print("\n999 to Cancel")
     task["title"] = input("Enter a task: ")
     
-    if task["title"] == '999': print()
+    if task["title"] == '999': return
     
     else:
         task['deadline'] = set_deadline()
@@ -166,7 +166,7 @@ def delete_task():
     
     except(ValueError, IndexError):
         print("\nInvalid number.")
-        return
+        return delete_task()
 
 while True:
     show_menu()
