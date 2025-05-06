@@ -3,11 +3,11 @@
 
 tasks = []
 priorities = {
-    "1": "Very High",
-    "2": "High",
-    "3": "Medium",
-    "4": "Low",
-    "5": "Very Low"
+    1: "Very High",
+    2: "High",
+    3: "Medium",
+    4: "Low",
+    5: "Very Low"
 }
 from datetime import datetime
 
@@ -43,7 +43,7 @@ def set_deadline():
     
     except ValueError:
         print("\nInvalid number.")
-        return
+        return set_deadline()
 
 def prioritize():
     print("\n1. Very High")
@@ -59,7 +59,7 @@ def prioritize():
     
     else:
         print("\nInvalid number.")
-        return
+        return prioritize()
 
 def show_tasks():
     enumerate_tasks()
@@ -73,7 +73,7 @@ def show_tasks():
     elif choice == '2': return
     else:
         print("\nInvalid number.")
-        return
+        return show_tasks()
 
 def enumerate_tasks():
     if not tasks: print("\nNo tasks.")
@@ -86,10 +86,10 @@ def enumerate_tasks():
             print(f"{i}.{task['title']}  {task['deadline']}")
 
             time_left = task["deadline"] - today
-            if task["deadline"] < today: print("  Expired!")
-            else: print(" ",time_left.days,"days left!")
+            if task["deadline"] < today: print("     Expired!")
+            else: print("    ",time_left.days,"days left!")
             
-            print(f"  priority: {task['priority']}")
+            print(f"     priority: {task['priority']}")
 
 def sort():
     print("\n1. Sort by date")
@@ -99,20 +99,20 @@ def sort():
     
     if choice == '1':
         tasks.sort(key=lambda x: x["deadline"])
-        return
+        return show_tasks()
     
     elif choice == '2':
         tasks.sort(key=lambda x: x["priority"])
-        return
+        return show_tasks()
     
     elif choice == '3': show_tasks()
     
     else:
         print("\nInvalid number.")
-        return
+        return sort()
 
 def edit_task():
-    while True:
+    while True:     #Choose a task to edit
         enumerate_tasks()
         print("\n999. Exit")
         try:
@@ -125,7 +125,7 @@ def edit_task():
             print("\nInvalid number.")
             continue
 
-        while True:
+        while True:     #Choose an edit option
             print(F"\n{tasks[num_e-1]['title']}  {tasks[num_e-1]['deadline']}")
             print("\n1. Edit title")
             print("2. Reset deadline")
@@ -133,28 +133,24 @@ def edit_task():
             print("4. Exit")
             choice = input("Choose an option: ")
 
-            if choice == '1':
+            if choice == '1':   #Edit title
                 task['title'] = input("\nEnter a task: ")
                 print(F"\nUpdated to '{tasks[num_e-1]['title']}'!")
             
-            elif choice == '2':
+            elif choice == '2':     #Reset deadline
                 task['deadline'] = set_deadline()
                 print(f"\nUpdated to {tasks[num_e-1]['deadline']}!")
             
-            elif choice == '3':
+            elif choice == '3':     #Reprioritize
                 task['priority'] = prioritize()
-                match task['priority']:
-                    case 1: str_p = ("Very High")
-                    case 2: str_p = ("High")
-                    case 3: str_p = ("Medium")
-                    case 4: str_p = ("Very Low")
-                    case 5: str_p = ("Low")
-                print(f"Updated to '{str_p}'!")
+                print(f"Updated to '{task['priority']}'!")
             
             elif choice == '4':
                 break
                 
-            else: print("\nInvalid number.")
+            else:
+                print("\nInvalid number.")
+                continue
 
 def delete_task():
     enumerate_tasks()
