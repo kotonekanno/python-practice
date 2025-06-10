@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zodic Sign Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>What's your zoadic sign?</h1>
+    <form method="post">
+        <h2>Enter your birthday</h2>
+        <label for="month">month</label>
+        <input type="number" name="month" id="month">
+        <br>
+        <label for="day">day</label>
+        <input type="number" name="day" id="day">
+        <br><br>
+        <button type="submit" name="action" value="show">Show Result</button>
+        <br>
+        <button type="submit" name="action" value="reset">Reset</button>
+    </form>
+    {% if zoadic %}
+        <p>Your zoadic sign is  </p>
+        <p class="zoadic">{{ zoadic }} </p>
+        <p>.</p>
+        <br>
+        <img src="{{ url_for('static',filename=zoadic + '.jpg') }}">
+    {% endif %}
+    {% if error %}
+        <p class="error">{{error}}</p>
+    {% endif %}
+</body>
+</html>
